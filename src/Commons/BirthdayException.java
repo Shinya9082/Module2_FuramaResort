@@ -20,6 +20,6 @@ public class BirthdayException extends Exception{
         LocalDate  curTime= LocalDate.now();
         int currentYear = Integer.parseInt(curTime.toString().substring(0,4)) ;
         int temp=Integer.parseInt(str.substring(6));
-        return temp <= currentYear - 18;
+        return temp <= currentYear - 18&&temp>1900;
     }
 }
