@@ -3,6 +3,10 @@ package Controllers;
 import Commons.*;
 import Models.*;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class MainController {
@@ -212,33 +216,103 @@ public class MainController {
     private static void showServices(){
         System.out.println("*****************************************");
         System.out.print("\n1.Show all villas:" +
-                "\n2.Show all houses:" +
-                "\n3.Show all rooms:" +
-                "\n4.Back to menu" +
-                "\n5.Exit" +
+                "\n2.Show all house" +
+                "\n3.Show all room" +
+                "\n4.Show all villa not duplicate" +
+                "\n5.Show all houses not duplicate" +
+                "\n6.Show all rooms not duplicate" +
+                "\n7.Back to menu" +
+                "\n8.Exit" +
                 "\nEnter your choice:");
         switch (input.nextInt()){
             case 1:
                 //showAllVilla
+                input.nextLine();
                 showAllVilla();
                 break;
             case 2:
                 //showAllHouse
+                input.nextLine();
                 showAllHouse();
                 break;
             case 3:
                 //showAllRoom
+                input.nextLine();
                 showAllRoom();
                 break;
             case 4:
-                displayMainMenu();
+                input.nextLine();
+                showAllNameVilla();
+                break;
             case 5:
+                input.nextLine();
+                showAllNameHouse();
+                break;
+            case 6:
+                input.nextLine();
+                showALLNameRoom();
+                break;
+            case 7:
+                displayMainMenu();
+            case 8:
                 System.exit(0);
             default:
                 System.out.println("Error");
                 backMainMenu();
         }
     }
+
+    private static void showAllNameVilla() {
+        String pathVilla="src/Data/Villa.csv";
+        Path path = Paths.get(pathVilla);
+        if(!Files.exists(path)){
+            System.out.println("File Villa is not exists!");
+        }else {
+            TreeSet<String> villaNameList =FuncWriteAndReadFileCSV.getAllNameService(pathVilla);
+            System.out.println("\nList Name Service Villa Not Duplicate");
+            for (String str: villaNameList){
+                System.out.println("******************");
+                System.out.println(str);
+            }
+            System.out.println("******************");
+        }
+        backMainMenu();
+    }
+
+    private static void showAllNameHouse() {
+        String pathHouse="src/Data/House.csv";
+        Path path = Paths.get(pathHouse);
+        if(!Files.exists(path)){
+            System.out.println("File House is not exists!");
+        }else {
+            TreeSet<String> houseNameList =FuncWriteAndReadFileCSV.getAllNameService(pathHouse);
+            System.out.println("\nList Name Service House Not Duplicate");
+            for (String str: houseNameList){
+                System.out.println("******************");
+                System.out.println(str);
+            }
+            System.out.println("******************");
+        }
+        backMainMenu();
+    }
+
+    private static void showALLNameRoom() {
+        String pathRoom="src/Data/Room.csv";
+        Path path = Paths.get(pathRoom);
+        if(!Files.exists(path)){
+            System.out.println("File Room is not exists!");
+        }else {
+            TreeSet<String> roomNameList =FuncWriteAndReadFileCSV.getAllNameService(pathRoom);
+            System.out.println("\nList Name Service Room Not Duplicate");
+            for (String str: roomNameList){
+                System.out.println("******************");
+                System.out.println(str);
+            }
+            System.out.println("******************");
+        }
+        backMainMenu();
+    }
+
     public static void addNewServices(){
         System.out.println("*****************************************");
         System.out.println("1.Add New Villa:");

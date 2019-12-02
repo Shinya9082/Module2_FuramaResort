@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class FuncWriteAndReadFileCSV {
     private static final char DEFAULT_SEPARATOR = ',';
@@ -342,6 +343,33 @@ public class FuncWriteAndReadFileCSV {
             System.out.println(e.getMessage());
         }
         return listCustomer;
+    }
+    //get nameService form file
+    private static String getNameServiceFormFile(String line){
+        String name="";
+        if(line!=null){
+            String []splitData= line.split(",");
+            name=splitData[1];
+        }
+        return name;
+    }
+    //
+    public static TreeSet<String> getAllNameService(String path){
+        BufferedReader br= null;
+        TreeSet<String> serviceTreeSet= new TreeSet<>();
+        try{
+            String line;
+            br = new BufferedReader(new FileReader(path));
+            while ((line=br.readLine())!=null){
+                if(getNameServiceFormFile(line).equals("serviceName")){
+                    continue;
+                }
+                serviceTreeSet.add(getNameServiceFormFile(line));
+            }
+        }catch (IOException ex){
+            System.out.println(ex.getMessage());
+        }
+        return serviceTreeSet;
     }
 }
 
