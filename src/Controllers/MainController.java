@@ -27,6 +27,7 @@ public class MainController {
                 addNewCustomer();
                 break;
             case 4:
+                input.nextLine();
                 showInformationCustomers();
                 break;
             case 5:
@@ -40,7 +41,46 @@ public class MainController {
         }
     }
     private static void addNewBookingResort(){
-
+        ArrayList<Customer> customerList=FuncWriteAndReadFileCSV.getCustomerFromCSV();
+        Customer customer=new Customer();
+        System.out.println("*****Booking Resort*******");
+        do {
+            System.out.print(getCustomerList(customerList));
+            System.out.print("Enter your choice:");
+            customer = customerList.get(input.nextInt()-1);
+        }while ((customer)==null);
+        input.nextLine();
+        System.out.print("1.Booking Villa" +
+                "\n2.Booking House" +
+                "\n3.Boooking Room" +
+                "\n4.Back to menu" +
+                "Enter your choice: ");
+        switch (input.nextInt()){
+            case 1://Villa
+                ArrayList<Villa> villaList = FuncWriteAndReadFileCSV.getVillaFromCSV();
+                System.out.println(getVillaList(villaList));
+                System.out.print("Enter your choie: ");
+                customer.setService(villaList.get(input.nextInt()-1));
+                break;
+            case 2://House
+                ArrayList<House> houseList= FuncWriteAndReadFileCSV.getHouseFromCSV();
+                System.out.println(getHouseList(houseList));
+                System.out.print("Enter your choie: ");
+                customer.setService(houseList.get(input.nextInt()-1));
+            case 3://Room
+                ArrayList<Room> roomList= FuncWriteAndReadFileCSV.getRoomFromCSV();
+                System.out.println(getRoomList(roomList));
+                System.out.print("Enter your choie: ");
+                customer.setService(roomList.get(input.nextInt()-1));
+            default:
+                System.out.println("Error");
+                backMainMenu();
+        }
+        customerList=FuncWriteAndReadFileCSV.getBookingFromCSV();
+        customerList.add(customer);
+        FuncWriteAndReadFileCSV.writeBookingToFileCsv(customerList);
+        System.out.println("*****ADD Booking for "+customer.getCustomerName()+" sucessed*****");
+        backMainMenu();
     };
     private static void addNewCustomer(){
         Customer customer=new Customer();
@@ -122,7 +162,6 @@ public class MainController {
             System.out.println(customer.showInfor());
             System.out.println("********************************");
         }
-        input.nextLine();
         System.out.println("Back to menu");
         backMainMenu();
     }
@@ -376,6 +415,38 @@ public class MainController {
         FuncWriteAndReadFileCSV.writeRoomToCsv(listRoom);
         System.out.println("\n"+room.getServiceName()+" added");
         backMainMenu();
+    }
+    private static String getCustomerList(ArrayList<Customer> arrayList){
+        String content="";
+        int i=1;
+        for (Customer customer: arrayList){
+            content+= i++ +". "+customer.getCustomerName()+"\n";
+        }
+        return content;
+    }
+    private static String getVillaList(ArrayList<Villa> arrayList){
+        String content="";
+        int i=1;
+        for (Villa villa: arrayList){
+            content+= i++ +". "+villa.getServiceName()+"\n";
+        }
+        return content;
+    }
+    private static String getHouseList(ArrayList<House> arrayList){
+        String content="";
+        int i=1;
+        for (House house: arrayList){
+            content+= i++ +". "+house.getServiceName()+"\n";
+        }
+        return content;
+    }
+    private static String getRoomList(ArrayList<Room> arrayList){
+        String content="";
+        int i=1;
+        for (Room room: arrayList){
+            content+= i++ +". "+room.getServiceName()+"\n";
+        }
+        return content;
     }
 
 }
