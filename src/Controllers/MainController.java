@@ -108,14 +108,12 @@ public class MainController {
     }
     private static void showInformationCustomers(){
         ArrayList<Customer> listcustomer= FuncWriteAndReadFileCSV.getCustomerFromCSV();
-        Collections.sort(listcustomer);
-
-        Iterator itr = listcustomer.iterator();
-//        for (Customer customer:listcustomer) {
-//            System.out.println("********************************");
-//            System.out.println(customer.showInfor());
-//            System.out.println("********************************");
-//        }
+        Collections.sort(listcustomer, new CustomerNameComparator());
+        for (Customer customer:listcustomer) {
+            System.out.println("********************************");
+            System.out.println(customer.showInfor());
+            System.out.println("********************************");
+        }
         input.nextLine();
         System.out.println("Back to menu");
         backMainMenu();
