@@ -12,7 +12,8 @@ public class MainController {
                 "\n2.Show Services" +
                 "\n3.Add New Customer" +
                 "\n4.Show Information Customer" +
-                "\n5.Exit" +
+                "\n5.Add New Booking Resort" +
+                "\n6.Exit" +
                 "\nEnter your choice: ");
         int choice=input.nextInt();
         switch (choice){
@@ -28,12 +29,19 @@ public class MainController {
             case 4:
                 showInformationCustomers();
                 break;
-            case 5:System.exit(0);
+            case 5:
+                addNewBookingResort();
+                break;
+            case 6:System.exit(0);
+
             default:
                 System.out.println("\nError");
                 backMainMenu();
         }
     }
+    private static void addNewBookingResort(){
+
+    };
     private static void addNewCustomer(){
         Customer customer=new Customer();
         System.out.println("********Begin add new customer*********");
