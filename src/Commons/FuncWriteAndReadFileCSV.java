@@ -4,6 +4,7 @@ package Commons;
 import Models.*;
 
 
+import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.CsvToBean;
@@ -301,6 +302,46 @@ public class FuncWriteAndReadFileCSV {
             System.out.println(e.getMessage());
         }
         return (ArrayList<Customer>) csvToBean.parse();
+    }
+    //get list Booking form CSV withService
+    public static ArrayList<Customer> ReaderBookingCSV() {
+        ArrayList<Customer> listCustomer = new ArrayList<Customer>();
+        try (Reader reader = new FileReader(pathBooking);
+             CSVReader csvReader = new CSVReader(reader);
+        ) {
+            String[] line;
+            csvReader.skip(NUMBER_OF_LINE_SKIP);
+            while ((line = csvReader.readNext()) != null) {
+                Customer customer = new Customer();
+                Service service = new Service() {
+                    @Override
+                    public String showInfor() {
+                        return null;
+                    }
+                };
+                customer.setId(line[0]);
+                customer.setCustomerName(line[1]);
+                customer.setDayOfBirth(line[2]);
+                customer.setGender((line[3]));
+                customer.setIdCard((line[4]));
+                customer.setPhoneNumber(line[5]);
+                customer.setEmail(line[6]);
+                customer.setTypeOfCustomer(line[7]);
+                customer.setAddress(line[8]);
+                service.setId(line[9]);
+                service.setServiceName(line[10]);
+                service.setUsableArea(Float.parseFloat(line[11]));
+                service.setRentFee(Float.parseFloat(line[12]));
+                service.setMaxCapacity(Integer.parseInt(line[13]));
+                service.setTypeOfRent(line[14]);
+                customer.setService(service);
+                listCustomer.add(customer);
+            }
+        } catch (
+                IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return listCustomer;
     }
 }
 

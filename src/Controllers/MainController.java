@@ -78,7 +78,7 @@ public class MainController {
                 System.out.println("Error");
                 backMainMenu();
         }
-        ArrayList<Customer> listBooking = FuncWriteAndReadFileCSV.getBookingFromCSV();
+        ArrayList<Customer> listBooking = FuncWriteAndReadFileCSV.ReaderBookingCSV();
         listBooking.add(customer);
         FuncWriteAndReadFileCSV.writeBookingToFileCsv(listBooking);
         System.out.println("\nAdd Booking for : " + customer.getCustomerName() + " Successfully !!!");

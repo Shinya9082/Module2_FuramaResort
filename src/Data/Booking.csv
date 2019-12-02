@@ -1,1 +1,5 @@
 id,customerName,dayOfBirth,gender,idCard,phoneNumber,email,typeOfCustomer,address,id,serviceName,usableArea,rentFee,maxCapacity,typeOfRent
+0ad373df8c264641b1eaf05a6b29acb8,Tuan,12/12/1993,Male,123 123 123,032,abc@gmail.com,Vip,123,5111ceb2c0224050a96830cb01e39e9f,House,30.0,400.0,20,A A
+0ad373df8c264641b1eaf05a6b29acb8,Tuan,12/12/1993,Male,123 123 123,032,abc@gmail.com,Vip,123,5111ceb2c0224050a96830cb01e39e9f,Room,30.0,400.0,20,A A
+0ad373df8c264641b1eaf05a6b29acb8,Tuan,12/12/1993,Male,123 123 123,032,abc@gmail.com,Vip,123,5111ceb2c0224050a96830cb01e39e9f,Villa,30.0,400.0,20,A A
+0ad373df8c264641b1eaf05a2b29acb8,Anh Le 2,12/12/1988,Male,123 123 123,032,abc@gmail.com,Vip,123,92919c13cffd481ba78e2ef008110353,Aa Av,1313.0,123.0,12,Av Av
