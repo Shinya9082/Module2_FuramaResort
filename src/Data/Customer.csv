@@ -1,3 +1,3 @@
 id,customerName,dayOfBirth,gender,idCard,phoneNumber,email,typeOfCustomer,address
-0ad373df8c264641b1eaf05a6b29acb8,Tuan Le,12/12/2012,Male,123 123 123,032,abc@gmail.com,Vip,123
-0ad373df8c264641b1eaf05a2b29acb8,Tuan Le 2,12/12/2012,Male,123 123 123,032,abc@gmail.com,Vip,123
+0ad373df8c264641b1eaf05a6b29acb8,Tuan,12/12/2012,Male,123 123 123,032,abc@gmail.com,Vip,123
+0ad373df8c264641b1eaf05a2b29acb8,Anh Le 2,12/12/2012,Male,123 123 123,032,abc@gmail.com,Vip,123
