@@ -50,36 +50,39 @@ public class MainController {
             customer = customerList.get(input.nextInt()-1);
         }while ((customer)==null);
         input.nextLine();
-        System.out.print("1.Booking Villa" +
+        System.out.print("*****Begin Booking for "+ customer.getCustomerName()+" *****" +
+                "\n1.Booking Villa" +
                 "\n2.Booking House" +
                 "\n3.Boooking Room" +
-                "\n4.Back to menu" +
-                "Enter your choice: ");
+                "\nEnter your choice: ");
         switch (input.nextInt()){
             case 1://Villa
                 ArrayList<Villa> villaList = FuncWriteAndReadFileCSV.getVillaFromCSV();
-                System.out.println(getVillaList(villaList));
+                System.out.print(getVillaList(villaList));
                 System.out.print("Enter your choie: ");
-                customer.setService(villaList.get(input.nextInt()-1));
+                customer.setService(villaList.get((input.nextInt()-1)));
                 break;
             case 2://House
                 ArrayList<House> houseList= FuncWriteAndReadFileCSV.getHouseFromCSV();
-                System.out.println(getHouseList(houseList));
+                System.out.print(getHouseList(houseList));
                 System.out.print("Enter your choie: ");
-                customer.setService(houseList.get(input.nextInt()-1));
+                customer.setService(houseList.get((input.nextInt()-1)));
+                break;
             case 3://Room
                 ArrayList<Room> roomList= FuncWriteAndReadFileCSV.getRoomFromCSV();
-                System.out.println(getRoomList(roomList));
+                System.out.print(getRoomList(roomList));
                 System.out.print("Enter your choie: ");
-                customer.setService(roomList.get(input.nextInt()-1));
+                customer.setService(roomList.get((input.nextInt()-1)));
+                break;
             default:
                 System.out.println("Error");
                 backMainMenu();
         }
-        customerList=FuncWriteAndReadFileCSV.getBookingFromCSV();
-        customerList.add(customer);
-        FuncWriteAndReadFileCSV.writeBookingToFileCsv(customerList);
-        System.out.println("*****ADD Booking for "+customer.getCustomerName()+" sucessed*****");
+        ArrayList<Customer> listBooking = FuncWriteAndReadFileCSV.getBookingFromCSV();
+        listBooking.add(customer);
+        FuncWriteAndReadFileCSV.writeBookingToFileCsv(listBooking);
+        System.out.println("\nAdd Booking for : " + customer.getCustomerName() + " Successfully !!!");
+        input.nextLine();
         backMainMenu();
     };
     private static void addNewCustomer(){
@@ -448,5 +451,4 @@ public class MainController {
         }
         return content;
     }
-
 }
