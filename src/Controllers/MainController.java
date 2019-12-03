@@ -17,7 +17,8 @@ public class MainController {
                 "\n3.Add New Customer" +
                 "\n4.Show Information Customer" +
                 "\n5.Add New Booking Resort" +
-                "\n6.Exit" +
+                "\n6.Show Information Employee" +
+                "\n7.Exit" +
                 "\nEnter your choice: ");
         int choice=input.nextInt();
         switch (choice){
@@ -37,13 +38,35 @@ public class MainController {
             case 5:
                 addNewBookingResort();
                 break;
-            case 6:System.exit(0);
-
+            case 6:
+                input.nextLine();
+                showInformationEmployee();
+            case 7:System.exit(0);
             default:
                 System.out.println("\nError");
                 backMainMenu();
         }
     }
+
+    private static void showInformationEmployee() {
+        Map<Integer, Employee> employeeMap= new HashMap<Integer, Employee>();
+        employeeMap.put(1,new Employee("Le Van A",21,"Da Nang"));
+        employeeMap.put(2,new Employee("Le Van A",21,"Da Nang"));
+        employeeMap.put(3,new Employee("Le Van A",21,"Da Nang"));
+        employeeMap.put(4,new Employee("Le Van A",21,"Da Nang"));
+        employeeMap.put(5,new Employee("Le Van A",21,"Da Nang"));
+        employeeMap.put(6,new Employee("Le Van A",21,"Da Nang"));
+        employeeMap.put(7,new Employee("Le Van A",21,"Da Nang"));
+        employeeMap.put(8,new Employee("Le Van A",21,"Da Nang"));
+        employeeMap.put(9,new Employee("Le Van A",21,"Da Nang"));
+        employeeMap.put(10,new Employee("Le Van A",21,"Da Nang"));
+        Set<Integer> set = employeeMap.keySet();
+        for (Integer key: set){
+            System.out.println(key +" "+ employeeMap.get(key).toString());
+        }
+        backMainMenu();
+    }
+
     private static void addNewBookingResort(){
         ArrayList<Customer> customerList=FuncWriteAndReadFileCSV.getCustomerFromCSV();
         Customer customer=new Customer();
@@ -173,7 +196,8 @@ public class MainController {
         backMainMenu();
     }
     private static void backMainMenu(){
-        System.out.println("Enter to continue...");
+        System.out.println("*****Back To Menu*****" +
+                "\nEnter to continue...");
         input.nextLine();
         System.out.println("*********************");
         displayMainMenu();
