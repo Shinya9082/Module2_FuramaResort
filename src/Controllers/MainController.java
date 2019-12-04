@@ -18,7 +18,9 @@ public class MainController {
                 "\n4.Show Information Customer" +
                 "\n5.Add New Booking Resort" +
                 "\n6.Show Information Employee" +
-                "\n7.Exit" +
+                "\n7.Ticket Movie" +
+                "\n8." +
+                "\n9.Exit" +
                 "\nEnter your choice: ");
         int choice=input.nextInt();
         switch (choice){
@@ -41,8 +43,14 @@ public class MainController {
             case 6:
                 input.nextLine();
                 showInformationEmployee();
-            case 7:System.exit(0);
+                break;
+            case 7:
+                movieTicket();
+                break;
+            case 8:
+            case 9:System.exit(0);
             default:
+                input.nextLine();
                 System.out.println("\nError");
                 backMainMenu();
         }
@@ -548,5 +556,28 @@ public class MainController {
             content+= i++ +". "+room.getServiceName()+"\n";
         }
         return content;
+    }
+    //// Ban ve
+    private static void movieTicket(){
+        Queue<String> movieTicketList = new PriorityQueue<String>() ;
+        System.out.println("*****Begin Booking Ticket******");
+        System.out.print("Enter today tickets: ");
+        int ticket= input.nextInt();
+        input.nextLine();
+        String customerName="";
+        for (int i=1;i<=ticket;i++){
+            System.out.print("Enter customer "+i+ " name:");
+            customerName=input.nextLine();
+            movieTicketList.add(customerName);
+        }
+        System.out.print("***** Sold out ******" +
+                "\nEnter to continue");
+        input.nextLine();
+        System.out.println("***** Ticket list ******");
+        int i=1;
+        for(String nameList:movieTicketList  ){
+            System.out.println(i+++"."+nameList);
+        }
+        backMainMenu();
     }
 }
