@@ -160,6 +160,9 @@ insert into HopDong values(13,'2019:11:05','2019:11:25',300000,10000000,3,4,1);
 insert into HopDong values(14,'2019:11:05','2019:11:25',300000,10000000,2,4,2);
 insert into HopDong values(15,'2019:11:05','2019:11:25',300000,10000000,4,5,4);
 insert into HopDong values(16,'2019:07:05','2019:11:25',300000,10000000,4,5,4);
+insert into HopDong values(17,'2019:07:05','2019:11:25',300000,10000000,2,2,6);
+insert into HopDong values(18,'2016:07:05','2019:11:25',300000,10000000,6,2,6);
+insert into HopDong values(19,'2015:07:05','2019:11:25',300000,10000000,6,2,6);
 
 
 
@@ -181,6 +184,11 @@ insert into HopDongChiTiet values(14,2,2);
 insert into HopDongChiTiet values(14,3,4);
 insert into HopDongChiTiet values(15,3,3);
 insert into HopDongChiTiet values(9,4,3);
+insert into HopDongChiTiet values(7,1,5);
+insert into HopDongChiTiet values(14,1,5);
+insert into HopDongChiTiet values(15,1,5);
+insert into HopDongChiTiet values(16,1,5);
+insert into HopDongChiTiet values(17,1,5);
 
 use furama_resort_tuan_c10g;
 
@@ -190,19 +198,19 @@ where hoten like '%T%' or hoten like '%H%' or  hoten like '%K%'
 having char_length(hoten)<15;
 
 -- task 3
-select *, year(CURRENT_DATE)-YEAR(NgaySinh) as So_Tuoi 
+select *, year(CURRENT_DATE)-YEAR(NgaySinh) as So_Tuoi
 from khachhang
-where  DiaChi="Đà Nẵng" or DiaChi= "Quảng Trị" 
+where  DiaChi="Đà Nẵng" or DiaChi= "Quảng Trị"
 having So_Tuoi between 18 and 50;
--- having  (EXTRACT(YEAR FROM CURRENT_DATE)-EXTRACT(YEAR FROM NgaySinh)>18) 
+-- having  (EXTRACT(YEAR FROM CURRENT_DATE)-EXTRACT(YEAR FROM NgaySinh)>18)
 -- and (EXTRACT(YEAR FROM CURRENT_DATE)-EXTRACT(YEAR FROM NgaySinh)<50)
 
 
 -- task 4
 select loaikhach.TenLoaiKhach,khachhang.Hoten, count(khachhang.HoTen) as So_Lan_Thue
-from loaikhach 
+from loaikhach
 inner join khachhang on khachhang.IDLoaiKhach=loaikhach.IDLoaiKhach
-inner join hopdong on hopdong.IDKhachHang=khachhang.IDKhachHang 
+inner join hopdong on hopdong.IDKhachHang=khachhang.IDKhachHang
 where loaikhach.TenLoaiKhach='Diamond'
 group by khachhang.HoTen
 order by So_Lan_Thue asc;
@@ -215,7 +223,7 @@ dichvu.TenDichVu,
 hopdong.NgayLamHopDong, hopdong.NgayKetThuc,
 dichvudikem.TenDichVuDiKem,
 sum(dichvu.ChiPhiThue+(DichVuDiKem.Gia*hopdongchitiet.SoLuong)) as TongTien
-from hopdong 
+from hopdong
 right join dichvu on dichvu.IDDichVu=hopdong.IDDichVu
 right join hopdongchitiet on hopdongchitiet.idhopdong=hopdong.idhopdong
 right join dichvudikem on dichvudikem.IDDichVuDiKem=hopdongchitiet.IDDichVuDiKem
@@ -224,7 +232,7 @@ right join loaikhach on loaikhach.IDLoaiKhach=khachhang.IDLoaiKhach
 group by hopdong.idhopdong
 order by khachhang.IDKhachHang;
 
--- task 6 
+-- task 6
 
 select DISTINCTROW dichvu.IDDichVu, TenDichVu, DienTich, ChiPhiThue, TenLoaiDichVu
 from dichvu
@@ -232,7 +240,7 @@ inner join loaidichvu
 on loaidichvu.IDLoaiDichVu=dichvu.IDLoaiDichVu
 left join hopdong
 on hopdong.IDDichVu=dichvu.IDDichVu
-where dichvu.IDDichVu 
+where dichvu.IDDichVu
 not in (select distinct IDDichVu from hopdong where year(ngaylamhopdong)=2019 and quarter(ngaylamhopdong)=1)
 group by dichvu.IDDichVu;
 
@@ -241,14 +249,14 @@ select distinct dichvu.IDDichVu,TenDichVu,TenDichVu,DienTich,SoNguoiToiDa,ChiPhi
 from hopdong
 right join dichvu on dichvu.IDDichVu=hopdong.IDDichVu
 inner join loaidichvu on loaidichvu.IDLoaiDichVu=dichvu.IDLoaiDichVu
-where hopdong.IDDichVu in (select distinct IDDichVu 
-							from hopdong 
+where hopdong.IDDichVu in (select distinct IDDichVu
+							from hopdong
 							where year(ngaylamhopdong)=2018
                             )
-and hopdong.IDDichVu not in(select distinct IDDichVu 
-							from hopdong 
+and hopdong.IDDichVu not in(select distinct IDDichVu
+							from hopdong
 							where year(ngaylamhopdong)=2019
-							) 
+							)
 group by IDDichVu;
 
 select distinct dichvu.IDDichVu,TenDichVu,TenDichVu,DienTich,SoNguoiToiDa,ChiPhiThue,TenLoaiDichVu
@@ -256,26 +264,26 @@ from hopdong
 inner join dichvu on dichvu.IDDichVu=hopdong.IDDichVu
 inner join loaidichvu on loaidichvu.IDLoaiDichVu=dichvu.IDLoaiDichVu
 where year(ngaylamhopdong)=2018
-and hopdong.IDDichVu not in(select distinct IDDichVu 
-							from hopdong 
+and hopdong.IDDichVu not in(select distinct IDDichVu
+							from hopdong
 							where year(ngaylamhopdong)=2019
-							) 
+							)
 group by IDDichVu;
 -- task 8
-select distinct HoTen as HoTenKhachHang 
+select distinct HoTen as HoTenKhachHang
 from khachhang;
 
-select HoTen as HoTenKhachHang 
+select HoTen as HoTenKhachHang
 from khachhang
 group by HoTen;
 
-select  HoTen as HoTenKhachHang 
-from khachhang 
+select  HoTen as HoTenKhachHang
+from khachhang
 union
-select  HoTen as HoTenKhachHang 
-from khachhang 
+select  HoTen as HoTenKhachHang
+from khachhang
 ;
--- task 9  
+-- task 9
 select temp.month,count(month(hopdong.ngaylamhopdong)) as so_khach_hang_dang_ky,sum(hopdong.tongtien) as tong_tien
 from
 (select 1 as month
@@ -306,7 +314,7 @@ on hopdong.IDHopDong=hopdongchitiet.IDHopDong
 group by hopdong.IDHopDong;
 
 -- task 11
-select dichvudikem.TenDichVuDiKem,dichvudikem.Gia,dichvudikem.TrangThaiKhaDung,dichvudikem.DonVi 
+select dichvudikem.TenDichVuDiKem,dichvudikem.Gia,dichvudikem.TrangThaiKhaDung,dichvudikem.DonVi
 from
 (select khachhang.IDKhachHang,HoTen,DiaChi,TenLoaiKhach from khachhang
 inner join loaikhach
@@ -340,7 +348,7 @@ left join hopdongchitiet
 on hopdongchitiet.IDHopDong=temp.IDHopDong
 group by temp.idhopdong;
 
--- 13.	Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các Khách hàng đã đặt phòng. 
+-- 13.	Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các Khách hàng đã đặt phòng.
 -- (Lưu ý là có thể có nhiều dịch vụ có số lần sử dụng nhiều như nhau).
 create temporary table Thong_Ke_Dich_Vu_Di_Kem
 select dichvudikem.TenDichVuDiKem,dichvudikem.Gia,dichvudikem.DonVi, count(TenDichVuDiKem) as SoLanSuDung
@@ -360,8 +368,8 @@ on max_SoLanSudung.Max_SoLanSuDung=Thong_Ke_Dich_Vu_Di_Kem.SoLanSuDung;
 drop temporary table Thong_Ke_Dich_Vu_Di_Kem;
 drop temporary table max_SoLanSudung;
 
--- task 14 
--- 14.	Hiển thị thông tin tất cả các Dịch vụ đi kèm chỉ mới được sử dụng một lần duy nhất. 
+-- task 14
+-- 14.	Hiển thị thông tin tất cả các Dịch vụ đi kèm chỉ mới được sử dụng một lần duy nhất.
 -- Thông tin hiển thị bao gồm IDHopDong, TenLoaiDichVu, TenDichVuDiKem, SoLanSuDung.
 
 select hopdong.IDHopDong, dichvu.TenDichVu, dichvudikem.TenDichVuDiKem, count(TenDichVuDiKem) as SoLanSuDung
@@ -373,4 +381,91 @@ on dichvu.IDDichVu= hopdong.IDDichVu
 inner join dichvudikem
 on hopdongchitiet.IDDichVuDiKem=dichvudikem.IDDichVuDiKem
 group by TenDichVuDiKem
-having SoLanSuDung=1
+having SoLanSuDung=1;
+
+-- 15.	Hiển thi thông tin của tất cả nhân viên bao gồm IDNhanVien, HoTen, TrinhDo, TenBoPhan, SoDienThoai, DiaChi
+-- mới chỉ lập được tối đa 3 hợp đồng từ năm 2018 đến 2019.
+SELECT nhanvien.IDNhanVien,nhanvien.HoTen,trinhdo.TrinhDo,bophan.TenBoPhan,vitri.TenViTri,nhanvien.SDT,nhanvien.DiaChi,count(IDHopDong)as So_luong_hop_Dong
+FROM hopdong
+right join nhanvien
+on hopdong.IDNhanVien=nhanvien.IDNhanVien
+right join bophan
+on nhanvien.IDBoPhan=bophan.IDBoPhan
+right join vitri
+on nhanvien.IDVitri=vitri.IDViTri
+right join trinhdo
+on nhanvien.IDTrinhDo=trinhdo.IDTrinhDo
+group by IDNhanVien
+having So_luong_hop_Dong<=3
+order by IDNhanVien
+;
+
+-- task 16 Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2017 đến năm 2019.
+delete from nhanvien
+where nhanvien.IDNhanVien not in (select IDNhanVien from
+														(SELECT distinct nhanvien.IDNhanVien
+														FROM hopdong
+														inner join nhanvien
+														on hopdong.IDNhanVien=nhanvien.IDNhanVien
+														where year(hopdong.ngaylamhopdong) between 2017 and 2019) as a)
+;
+delete from nhanvien
+where not exists (
+				select IDNhanVien from hopdong
+				where year(hopdong.NgayLamHopDong) between 2017 and 2019 and hopdong.IDNhanVien=nhanvien.IDNhanVien);
+
+-- 17.	Cập nhật thông tin những khách hàng có TenLoaiKhachHang từ  Platinium lên Diamond,
+-- chỉ cập nhật những khách hàng đã từng đặt phòng với tổng Tiền thanh toán trong năm 2019 là lớn hơn 10.000.000 VNĐ.
+
+-- khach hang Platinium tổng Tiền thanh toán trong năm 2019 là lớn hơn 10.000.000 VNĐ
+select khachhang.IDKhachHang,TenLoaiKhach,khachhang.HoTen, sum(hopdong.TongTien) as Tong_thanh_toan
+from loaikhach
+inner join khachhang
+on loaikhach.IDLoaiKhach=khachhang.IDLoaiKhach
+inner join hopdong
+on khachhang.IDKhachHang=hopdong.IDKhachHang
+where TenLoaiKhach='Platinium' and year(ngaylamhopdong)=2019
+group by khachhang.IDKhachHang
+having Tong_thanh_toan>=10000000;
+-- update theo dieu kien
+update khachhang
+set IDLoaiKhach = 1
+where khachhang.IDKhachHang in (select temp.IDKhachHang from (
+														select khachhang.IDKhachHang, sum(hopdong.TongTien) as Tong_thanh_toan
+														from loaikhach
+														inner join khachhang
+														on loaikhach.IDLoaiKhach=khachhang.IDLoaiKhach
+														inner join hopdong
+														on khachhang.IDKhachHang=hopdong.IDKhachHang
+														where TenLoaiKhach='Platinium' and year(ngaylamhopdong)=2019
+														group by khachhang.IDKhachHang
+														having Tong_thanh_toan>=10000000)as temp);
+
+-- task 18.	Xóa những khách hàng có hợp đồng trước năm 2016 (chú ý ràng buộc giữa các bảng)
+delete khachhang,hopdong,hopdongchitiet
+from khachhang
+inner join hopdong
+on khachhang.IDKhachHang=hopdong.IDKhachHang
+left join hopdongchitiet
+on hopdongchitiet.IDHopDong=hopdong.IDHopDong
+where not exists (select hopdong.IDHopDong where year(hopdong.ngaylamhopdong)>2016 and khachhang.IDKhachHang=hopdong.IDKhachHang);
+
+-- task 19.	Cập nhật giá cho các Dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2019 lên gấp đôi.
+update dichvudikem inner join (select dichvudikem.IDDichVuDiKem as Ten_Dich_Vu_Di_Kem
+														 from dichvudikem
+ 														inner join hopdongchitiet
+ 														on dichvudikem.IDDichVuDiKem=hopdongchitiet.IDDichVuDiKem
+ 														inner join hopdong
+ 														on hopdong.IDHopDong=hopdongchitiet.IDHopDong
+ 														where year(ngaylamhopdong)=2019
+ 														group by dichvudikem.IDDichVuDiKem
+ 														having count(dichvudikem.IDDichVuDiKem)>=10) as temp
+set dichvudikem.gia=dichvudikem.gia*2
+where dichvudikem.IDDichVuDiKem= temp.Ten_Dich_Vu_Di_Kem;
+select * from dichvudikem;
+
+-- task 20.	Hiển thị thông tin của tất cả các Nhân viên và Khách hàng có trong hệ thống, thông tin hiển thị bao gồm
+-- ID (IDNhanVien, IDKhachHang), HoTen, Email, SoDienThoai, NgaySinh, DiaChi.
+select nhanvien.IDNhanVien as ID,nhanvien.HoTen,nhanvien.Email,nhanvien.NgaySinh,nhanvien.DiaChi, 'Nhân Viên' as Thuộc  from nhanvien
+union all
+select khachhang.IDKhachHang as ID,khachhang.HoTen,khachhang.Email,khachhang.NgaySinh,khachhang.DiaChi, 'Khách Hàng' from khachhang
